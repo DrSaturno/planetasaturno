@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/700.css";
+@import "@fontsource/jetbrains-mono/800.css";
+@import "@fontsource/manrope/400.css";
+@import "@fontsource/manrope/500.css";
+@import "@fontsource/manrope/700.css";
+
+@theme {
+  /* Paleta — Saturno: espacio profundo + dorado de anillo, no el verde-hacker genérico */
+  --color-space-950: #0b0d17;
+  --color-space-900: #14172a;
+  --color-space-800: #1d2140;
+  --color-ring: #d4a857;
+  --color-ring-bright: #eccb8a;
+  --color-telemetry: #5fd4c7;
+  --color-ink-100: #f2efe6;
+  --color-ink-400: #8b90a8;
+
+  --font-display: "JetBrains Mono", ui-monospace, monospace;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-space-950);
+  color: var(--color-ink-100);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background-color: var(--color-ring);
+  color: var(--color-space-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-telemetry);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planeta Saturno — Automatización con IA para PyMEs</title>
+    <meta
+      name="description"
+      content="Agencia de IA aplicada a negocios. Automatizá ventas, atención al cliente y operaciones con agentes — construida en público por Dr. Saturno."
+    />
+
+    <!--
+      TODO(Nico): Google Tag Manager — reemplazar GTM-XXXXXXX por el ID real
+      cuando crees el contenedor (SPEC.md §6.2). Sin ID real, este snippet
+      no carga nada (GTM lo ignora silenciosamente si el ID es inválido).
+    -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-XXXXXXX");
+    </script>
+  </head>
+  <body>
+    <!-- TODO(Nico): mismo ID que arriba -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+        title="Google Tag Manager"
+      ></iframe>
+    </noscript>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
