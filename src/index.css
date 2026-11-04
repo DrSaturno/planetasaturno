@@ -1,54 +1,120 @@
 @import "tailwindcss";
+@import "@fontsource/montserrat/500.css";
+@import "@fontsource/montserrat/600.css";
+@import "@fontsource/montserrat/700.css";
+@import "@fontsource/montserrat/800.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
 @import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/jetbrains-mono/700.css";
-@import "@fontsource/jetbrains-mono/800.css";
-@import "@fontsource/manrope/400.css";
-@import "@fontsource/manrope/500.css";
-@import "@fontsource/manrope/700.css";
+@import "@fontsource/caveat/500.css";
 
+/* Identidad visual oficial — fuente de verdad: agenciapersonal/BRAND.md (2026-11-04) */
 @theme {
-  /* Paleta — Saturno: espacio profundo + dorado de anillo, no el verde-hacker genérico */
-  --color-space-950: #0b0d17;
-  --color-space-900: #14172a;
-  --color-space-800: #1d2140;
-  --color-ring: #d4a857;
-  --color-ring-bright: #eccb8a;
-  --color-telemetry: #5fd4c7;
-  --color-ink-100: #f2efe6;
-  --color-ink-400: #8b90a8;
+  --color-bg-950: #070c18;
+  --color-bg-900: #0b1224;
+  --color-bg-800: #111b33;
+  --color-bg-700: #182544;
+  --color-bg-600: #22345c;
 
-  --font-display: "JetBrains Mono", ui-monospace, monospace;
-  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --color-blue-300: #7fa8ff;
+  --color-blue-500: #397cff;
+  --color-blue-600: #2f6beb;
+  --color-cyan-500: #00d3ff;
+  --color-violet-300: #b39bff;
+  --color-violet-500: #8b5cff;
+  --color-violet-600: #7a4bfa;
+  --color-green-300: #5ee59a;
+  --color-green-500: #25d366;
+
+  --color-text-hi: #edf5ff;
+  --color-text-mid: #a9b8d4;
+  --color-text-low: #7186ab;
+
+  --color-warning: #f5c542;
+  --color-danger: #ff5c7a;
+
+  /* Alias de compatibilidad: las páginas que todavía no se rediseñaron usan estos nombres */
+  --color-space-950: #070c18;
+  --color-space-900: #0b1224;
+  --color-space-800: #111b33;
+  --color-ring: #397cff;
+  --color-ring-bright: #7fa8ff;
+  --color-telemetry: #00d3ff;
+  --color-ink-100: #edf5ff;
+  --color-ink-400: #a9b8d4;
+
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-hand: "Caveat", cursive;
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-twinkle: twinkle 4s ease-in-out infinite;
+  --animate-terminal-in: terminal-in 180ms ease-out;
+  --animate-caret: caret 1s steps(1) infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 1; }
+  }
+  @keyframes terminal-in {
+    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes caret {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
 }
 
 html {
   color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-space-950);
-  color: var(--color-ink-100);
+  background-color: var(--color-bg-900);
+  color: var(--color-text-hi);
   font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background-color: var(--color-ring);
-  color: var(--color-space-950);
+  background-color: var(--color-blue-600);
+  color: #ffffff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-telemetry);
+  outline: 2px solid var(--color-cyan-500);
   outline-offset: 2px;
 }
 
+/* Punto que recorre el flujo del panel "Cómo trabajamos" */
+@keyframes flow-dot {
+  0% { top: 0; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+.flow-dot {
+  animation: flow-dot 2.4s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

@@ -159,4 +159,16 @@ export const contacto = {
   instagram: "@drsaturno.tech",
   instagram_url: "https://instagram.com/drsaturno.tech",
   web: "planetasaturno.com",
+  /**
+   * TODO(Nico): número de WhatsApp en formato internacional sin "+" ni espacios
+   * (ej. 5491112345678). Vacío = el formulario de contacto y la terminal
+   * derivan a Instagram en vez de WhatsApp.
+   */
+  whatsapp: "",
 };
+
+export function whatsappUrl(texto?: string): string | null {
+  if (!contacto.whatsapp) return null;
+  const q = texto ? `?text=${encodeURIComponent(texto)}` : "";
+  return `https://wa.me/${contacto.whatsapp}${q}`;
+}

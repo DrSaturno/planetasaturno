@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, type ReactNode } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { TerminalProvider } from "./context/TerminalContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -10,9 +11,27 @@ import Casos from "./pages/Casos";
 import Blog from "./pages/Blog";
 import SobreMi from "./pages/SobreMi";
 
-function Layout({ children }: { children: React.ReactNode }) {
+/** Al navegar: si la URL trae #ancla, baja a esa sección; si no, arranca arriba. */
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    // esperar a que la página nueva pinte la sección
+    const id = window.setTimeout(() => {
+      document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView({ behavior: "smooth" });
+    }, 60);
+    return () => window.clearTimeout(id);
+  }, [pathname, hash]);
+  return null;
+}
+
+function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
+      <ScrollManager />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

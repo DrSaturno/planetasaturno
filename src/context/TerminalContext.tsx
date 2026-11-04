@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 
 type TerminalContextValue = {
   isOpen: boolean;
@@ -11,12 +11,10 @@ const TerminalContext = createContext<TerminalContextValue | null>(null);
 
 export function TerminalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const value: TerminalContextValue = {
-    isOpen,
-    open: () => setIsOpen(true),
-    close: () => setIsOpen(false),
-    toggle: () => setIsOpen((v) => !v),
-  };
+  const open = useCallback(() => setIsOpen(true), []);
+  const close = useCallback(() => setIsOpen(false), []);
+  const toggle = useCallback(() => setIsOpen((v) => !v), []);
+  const value = useMemo(() => ({ isOpen, open, close, toggle }), [isOpen, open, close, toggle]);
   return <TerminalContext.Provider value={value}>{children}</TerminalContext.Provider>;
 }
 

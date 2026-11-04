@@ -30,7 +30,8 @@ const OPEN_TARGETS: Record<string, { path: string; external?: boolean }> = {
 
 function cmdHelp(): TerminalLine[] {
   return [
-    t("comandos disponibles:"),
+    t("escribí tu pregunta con tus palabras, tocá una pregunta rápida,"),
+    t("o usá alguno de estos comandos:"),
     t("  help              – esta lista"),
     t("  whoami            – quién es Nico / Dr. Saturno"),
     t("  servicios         – catálogo completo con precios"),
@@ -152,6 +153,16 @@ const FORTUNES = [
 
 function cmdFortune(): TerminalLine[] {
   return [t(FORTUNES[Math.floor(Math.random() * FORTUNES.length)])];
+}
+
+const COMMANDS = new Set([
+  "help", "whoami", "servicios", "casos", "stack", "contacto", "cat", "open", "date", "fortune", "clear",
+]);
+
+/** Es comando si arranca con una palabra reservada y es corto ("open casos", "help"). */
+export function isCommand(raw: string): boolean {
+  const parts = raw.trim().toLowerCase().split(/\s+/);
+  return COMMANDS.has(parts[0]) && parts.length <= 2;
 }
 
 export function runCommand(raw: string, ctx: Ctx): TerminalLine[] {

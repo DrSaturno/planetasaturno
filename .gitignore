@@ -19,3 +19,6 @@ dist-ssr/
 
 # Logs
 npm-debug.log*
+
+.vercel
+.env*
