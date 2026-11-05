@@ -5,16 +5,16 @@ import { garantias } from "../../content/home";
 import { track } from "../../lib/track";
 import Icon from "../Icon";
 import SlotImage from "../SlotImage";
-import { Planet, Starfield } from "../Space";
+import { Starfield } from "../Space";
 import { Kicker } from "./shared";
 
 const ESCENA = "/brand/cta-final.webp";
+const ESCENA_VERTICAL = "/brand/cta-final-mobile.webp";
 
 export default function Contacto() {
   return (
     <section id="contacto" aria-labelledby="contacto-titulo" className="relative scroll-mt-20 overflow-hidden border-t border-bg-600/50">
       <Starfield count={90} seed={31} />
-      <Planet className="-right-[22rem] -bottom-[30rem] h-[44rem] w-[44rem] opacity-80 lg:hidden" />
 
       {/* desktop: escena de fondo, el astronauta queda libre a la derecha del formulario */}
       <SlotImage
@@ -27,8 +27,16 @@ export default function Contacto() {
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-bg-900 to-transparent" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-bg-900 to-transparent" />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-24">
-        <div className="grid gap-10 md:grid-cols-2 lg:w-[64%] xl:gap-12">
+      {/* celular: versión vertical de la escena al pie; el formulario tapa el cielo vacío y el astronauta queda abajo */}
+      <SlotImage
+        src={ESCENA_VERTICAL}
+        alt="Astronauta de Planeta Saturno mirando el planeta"
+        className="pointer-events-none absolute inset-x-0 bottom-0 w-full [mask-image:linear-gradient(to_bottom,transparent,black_30%,black_85%,transparent)] sm:hidden"
+        fallback={null}
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 pt-20 pb-[104vw] sm:px-6 sm:pb-0 lg:py-24">
+        <div className="relative z-10 grid gap-10 md:grid-cols-2 lg:w-[64%] xl:gap-12">
           <div>
             <Kicker>Hablemos de tu proyecto</Kicker>
             <h2 id="contacto-titulo" className="mt-3 font-display text-3xl leading-[1.12] font-bold text-text-hi sm:text-4xl">
@@ -63,13 +71,15 @@ export default function Contacto() {
           <FormularioContacto />
         </div>
 
-        {/* mobile/tablet: la escena va debajo del formulario */}
-        <SlotImage
-          src={ESCENA}
-          alt="Astronauta de Planeta Saturno mirando el planeta"
-          className="mt-12 aspect-[16/9] w-full rounded-2xl object-cover object-[75%_center] [mask-image:linear-gradient(to_bottom,black_70%,transparent)] lg:hidden"
-          fallback={null}
-        />
+        {/* tablet: la escena cierra la sección de borde a borde, asomando detrás del formulario */}
+        <div className="-mx-6 -mt-28 hidden sm:block lg:hidden">
+          <SlotImage
+            src={ESCENA}
+            alt="Astronauta de Planeta Saturno mirando el planeta"
+            className="aspect-[16/9] w-full object-cover object-[88%_center] [mask-image:linear-gradient(to_bottom,transparent,black_35%,black_80%,transparent)]"
+            fallback={null}
+          />
+        </div>
       </div>
     </section>
   );

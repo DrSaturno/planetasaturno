@@ -5,6 +5,7 @@ import { Planet, Sparkle, Starfield } from "../Space";
 import { Kicker } from "./shared";
 
 const ESCENA = "/brand/hero.webp";
+const ESCENA_VERTICAL = "/brand/hero-mobile.webp";
 
 /** Funde la escena hacia la izquierda (texto) y hacia abajo (siguiente sección). */
 const FUNDIDO = {
@@ -33,20 +34,40 @@ export default function Hero() {
           className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-[80%] object-cover object-center lg:block"
         />
       ) : null}
-      <Planet
-        className={`-top-[20rem] -right-[15rem] h-[36rem] w-[36rem] sm:-top-[26rem] sm:-right-[20rem] sm:h-[50rem] sm:w-[50rem] lg:-top-[30rem] lg:-right-[13rem] lg:h-[64rem] lg:w-[64rem] ${
-          escenaOk ? "lg:hidden" : ""
-        }`}
-      />
-      <Sparkle className="top-[18%] left-[46%] h-4 w-4 opacity-80 lg:hidden" />
+      {/* celular: versión vertical de la escena como póster; el título va sobre el cielo y la bajada sobre las rocas */}
+      {escenaOk ? (
+        <>
+          <img
+            src={ESCENA_VERTICAL}
+            alt=""
+            width={941}
+            height={1672}
+            fetchPriority="high"
+            onError={() => setEscenaOk(false)}
+            className="pointer-events-none absolute inset-x-0 top-0 w-full [mask-image:linear-gradient(to_bottom,black_80%,transparent)] sm:hidden"
+          />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 aspect-[941/1672] bg-linear-to-b from-transparent from-55% to-bg-900/85 sm:hidden" />
+        </>
+      ) : null}
+      {!escenaOk && (
+        <>
+          <Planet className="-top-[20rem] -right-[15rem] h-[36rem] w-[36rem] sm:-top-[26rem] sm:-right-[20rem] sm:h-[50rem] sm:w-[50rem] lg:-top-[30rem] lg:-right-[13rem] lg:h-[64rem] lg:w-[64rem]" />
+          <Sparkle className="top-[18%] left-[46%] h-4 w-4 opacity-80 lg:hidden" />
+        </>
+      )}
       {/* legibilidad del texto sobre el fondo */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-r from-bg-900/90 via-bg-900/40 to-transparent lg:from-bg-900/80 lg:via-bg-900/25" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-linear-to-b from-transparent via-bg-900/70 to-bg-900" />
       {/* en desktop la nota se ubica respecto de la escena (ancho de la sección), no del contenedor centrado */}
       {escenaOk && <Nota className="absolute top-[13%] right-[5%] z-10 hidden lg:block" />}
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-6 px-4 pt-14 pb-10 sm:px-6 lg:min-h-[calc(100vh-72px)] lg:grid-cols-[1.05fr_1fr] lg:pt-10">
-        <div>
+      <div
+        className={`relative mx-auto grid max-w-7xl items-center gap-6 px-4 pb-10 sm:px-6 lg:min-h-[calc(100vh-72px)] lg:grid-cols-[1.05fr_1fr] lg:pt-10 ${
+          escenaOk ? "pt-10 sm:pt-0" : "pt-14"
+        }`}
+      >
+        {/* en tablet el texto se monta sobre el fundido de la escena */}
+        <div className={`relative z-10 ${escenaOk ? "sm:-mt-28 lg:mt-0" : ""}`}>
           <Kicker>{hero.kicker}</Kicker>
           <h1
             id="hero-titulo"
@@ -59,6 +80,12 @@ export default function Hero() {
             ))}
             <span className="block text-blue-500 drop-shadow-[0_0_28px_rgba(57,124,255,0.45)]">{hero.tituloAcento}</span>
           </h1>
+          {/* celular: hueco para que se vea el astronauta del póster entre el título y la bajada */}
+          {escenaOk && (
+            <div aria-hidden="true" className="relative h-[52vw] sm:hidden">
+              <Nota espejo className="absolute top-[4vw] left-0" />
+            </div>
+          )}
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-text-hi">{hero.bajada}</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -94,19 +121,25 @@ export default function Hero() {
           </ul>
         </div>
 
-        <div className={`relative ${escenaOk ? "lg:h-[600px]" : "h-[340px] sm:h-[440px] lg:h-[600px]"}`}>
+        <div
+          className={`relative ${
+            escenaOk ? "order-first -mx-6 hidden sm:block lg:order-none lg:mx-0 lg:h-[600px]" : "h-[340px] sm:h-[440px] lg:h-[600px]"
+          }`}
+        >
           <Nota
-            className={`absolute top-3 right-3 z-10 sm:right-8 ${escenaOk ? "lg:hidden" : "lg:top-6 lg:right-0"}`}
+            className={`absolute z-10 ${
+              escenaOk ? "top-8 right-10 lg:hidden" : "top-3 right-3 sm:right-8 lg:top-6 lg:right-0"
+            }`}
           />
 
           {escenaOk ? (
-            // En pantallas chicas la escena va debajo del texto (en desktop es el fondo de la sección)
+            // En pantallas chicas la escena abre el hero de borde a borde y se funde hacia el texto (en desktop es el fondo de la sección)
             <img
               src={ESCENA}
               alt="Astronauta de Planeta Saturno trabajando con una laptop frente al planeta"
               width={1448}
               height={1086}
-              className="aspect-[4/3] w-full rounded-2xl object-cover object-[68%_center] [mask-image:linear-gradient(to_bottom,black_75%,transparent)] lg:hidden"
+              className="aspect-[16/9] w-full object-cover object-[70%_40%] [mask-image:linear-gradient(to_bottom,black_55%,transparent)] lg:hidden"
             />
           ) : (
             <div className="absolute inset-0 flex items-end justify-center lg:items-center">
@@ -126,7 +159,8 @@ export default function Hero() {
   );
 }
 
-function Nota({ className }: { className: string }) {
+/** `espejo`: la flecha apunta hacia la derecha (cuando la nota queda a la izquierda del astronauta). */
+function Nota({ className, espejo = false }: { className: string; espejo?: boolean }) {
   return (
     <p
       aria-hidden="true"
@@ -137,7 +171,7 @@ function Nota({ className }: { className: string }) {
           {l}
         </span>
       ))}
-      <svg viewBox="0 0 80 50" className="mt-1 ml-2 h-10 w-16 text-text-hi" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <svg viewBox="0 0 80 50" className={`mt-1 h-10 w-16 text-text-hi ${espejo ? "ml-16 -scale-x-100" : "ml-2"}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
         <path d="M70 4C68 26 50 40 14 40" />
         <path d="M22 31 12 40l11 7" />
       </svg>
