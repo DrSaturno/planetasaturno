@@ -27,15 +27,16 @@ export default function Contacto() {
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-bg-900 to-transparent" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-bg-900 to-transparent" />
 
-      {/* celular: versión vertical de la escena al pie; el formulario tapa el cielo vacío y el astronauta queda abajo */}
+      {/* celular: versión vertical de la escena al pie; el formulario (vidrio) queda sobre el cielo y el planeta, el astronauta abajo */}
       <SlotImage
         src={ESCENA_VERTICAL}
         alt="Astronauta de Planeta Saturno mirando el planeta"
-        className="pointer-events-none absolute inset-x-0 bottom-0 w-full [mask-image:linear-gradient(to_bottom,transparent,black_30%,black_85%,transparent)] sm:hidden"
+        className="pointer-events-none absolute -right-[12vw] -bottom-[50vw] w-[140vw] max-w-none [mask-image:linear-gradient(to_bottom,transparent,black_15%)] sm:hidden"
         fallback={null}
       />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-bg-900 to-transparent sm:hidden" />
 
-      <div className="relative mx-auto max-w-7xl px-4 pt-20 pb-[104vw] sm:px-6 sm:pb-0 lg:py-24">
+      <div className="relative mx-auto max-w-7xl px-4 pt-20 pb-[90vw] sm:px-6 sm:pb-0 lg:py-24">
         <div className="relative z-10 grid gap-10 md:grid-cols-2 lg:w-[64%] xl:gap-12">
           <div>
             <Kicker>Hablemos de tu proyecto</Kicker>
@@ -166,7 +167,7 @@ function FormularioContacto() {
       noValidate
       onSubmit={onSubmit}
       aria-label="Formulario de contacto"
-      className="self-start rounded-2xl border border-bg-600/80 bg-bg-800/80 p-6 shadow-[0_30px_80px_-30px_rgba(57,124,255,0.5)] backdrop-blur-md sm:p-7"
+      className="self-start rounded-2xl border border-bg-600/80 bg-bg-800/50 p-6 shadow-[0_30px_80px_-30px_rgba(57,124,255,0.5)] backdrop-blur-[6px] sm:bg-bg-800/80 sm:p-7 sm:backdrop-blur-md"
     >
       <div className="space-y-4">
         <Campo id="nombre" label="Nombre" requerido error={errores.nombre}>
